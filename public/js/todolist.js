@@ -9,7 +9,7 @@ $(function () {
     runToDoQuery();
   }
 
-  const renderToDo = function (outputElement, toDoList, index) {
+  const renderToDo = function (outputElement, toDoList, _id) {
     const output = $(outputElement);
 
     const toDoListElement = $('<div>').addClass('toDo');
@@ -18,7 +18,7 @@ $(function () {
     const checkbox = $('<input type="checkbox">')
       .attr('checked', toDoList.completed)
       .addClass('completed')
-      .attr('data-index', index);
+      .attr('data-id', _id);
 
 
     label.append(checkbox);
@@ -32,7 +32,7 @@ $(function () {
 
       $('<button>')
         .addClass('delete')
-        .attr('data-index', index)
+        .attr('data-id', _id)
         .append('<i>').addClass('fas fa-times')
     );
 
@@ -42,7 +42,7 @@ $(function () {
   const renderToDos = function (outputElement, toDoList) {
     const output = $(outputElement);
     output.empty();
-    toDoList.forEach((todo, index) => renderToDo(outputElement, todo, index));
+    toDoList.forEach((todo, _id) => renderToDo(outputElement, todo, _id));
   }
 
   const runToDoQuery = function () {
@@ -104,7 +104,7 @@ $(function () {
   })
 
   $('body').on('click', '.completed', function (event) {
-    const thisIndex = $(this).attr('data-index');
+    const thisIndex = $(this).attr('data-id');
     const completed = event.target.checked; 
 
   
@@ -135,17 +135,17 @@ $(function () {
 
 
   $('body').on('click', '.delete', function (event) {
-    const thisIndex = $(this).attr('data-index');
+    const todoID = $(this).attr('data-id');
 
-    console.log(state.toDoList[Number(thisIndex)])
+    console.log(state.toDoList[Number(todoID)])
 
     // Make the DELETE request
     $.ajax({
-        url: `/api/toDoSchema/${thisIndex}`,
+        url: `/api/toDoSchema/${todoID}`,
         method: 'DELETE'
       })
       .then(function (data) {
-
+        console.log(data.success);
         // If our DELETE request was successfully processed, proceed on
         if (data.success) {
           render();

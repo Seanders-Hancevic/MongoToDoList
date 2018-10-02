@@ -3,9 +3,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
-mongoose.connect('mongodb://localhost/todolistmaster', { useNewUrlParser: true });
+mongoose.connect('mongodb://gtbcuser:GTBC123@ds119273.mlab.com:19273/heroku_k0t35xcc', { useNewUrlParser: true });
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
